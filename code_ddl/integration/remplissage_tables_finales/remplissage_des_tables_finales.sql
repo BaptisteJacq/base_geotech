@@ -3,7 +3,7 @@ Remplissage des tables finales
 */
 
 -- Insertion des familles
-MERGE INTO G_GEO.TA_GEOTECH_FAMILLE a
+MERGE INTO G_GEOTECH.TA_GEOTECH_FAMILLE a
 USING(
     SELECT
         'Type d''études géotechniques' AS valeur
@@ -15,7 +15,7 @@ INSERT(a.valeur)
 VALUES(t.valeur);
 
 -- Insertion des libellés longs
-MERGE INTO G_GEO.TA_GEOTECH_LIBELLE a
+MERGE INTO G_GEOTECH.TA_GEOTECH_LIBELLE a
 USING(
     SELECT 
         'Etude géotechnique préalable G1 - Phase étude de site' AS libelle_long,
@@ -101,14 +101,14 @@ INSERT(a.libelle_long, a.libelle_court)
 VALUES(t.libelle_long, t.libelle_court);
 
 -- Insertion des relations familles / libellés longs
-MERGE INTO G_GEO.TA_GEOTECH_FAMILLE_LIBELLE a
+MERGE INTO G_GEOTECH.TA_GEOTECH_FAMILLE_LIBELLE a
 USING(
     SELECT
         a.objectid AS fid_famille,
         b.objectid AS fid_libelle
     FROM
-        G_GEO.TA_GEOTECH_FAMILLE a,
-        G_GEO.TA_GEOTECH_LIBELLE b
+        G_GEOTECH.TA_GEOTECH_FAMILLE a,
+        G_GEOTECH.TA_GEOTECH_LIBELLE b
     WHERE
         UPPER(a.valeur) = UPPER('Type d''études géotechniques')
         AND UPPER(b.libelle_long) IN(
@@ -135,7 +135,7 @@ INSERT(a.fid_famille, a.fid_libelle)
 VALUES(t.fid_famille, t.fid_libelle);
 
 -- Insertion des sites
-MERGE INTO G_GEO.TA_GEOTECH_SITE a
+MERGE INTO G_GEOTECH.TA_GEOTECH_SITE a
 USING(
     SELECT
         MDSYS.SDO_GEOMETRY(2001, 2154, MDSYS.SDO_POINT_TYPE(712887.53, 7067824.13, NULL), NULL, NULL) AS geom,
@@ -181,13 +181,13 @@ INSERT(a.geom, a.adresse, a.description)
 VALUES(t.geom, t.adresse, t.description);
 
 -- Insertion des études
-MERGE INTO G_GEO.TA_GEOTECH_ETUDE a
+MERGE INTO G_GEOTECH.TA_GEOTECH_ETUDE a
 USING(
     SELECT
         2021 AS annee_creation,
         a.objectid AS fid_type_etude
     FROM
-        G_GEO.TA_GEOTECH_LIBELLE a
+        G_GEOTECH.TA_GEOTECH_LIBELLE a
     WHERE
         UPPER(a.libelle_court) = UPPER('G2 AVP')
     UNION ALL
@@ -195,7 +195,7 @@ USING(
         2018 AS annee_creation,
         a.objectid AS fid_type_etude
     FROM
-        G_GEO.TA_GEOTECH_LIBELLE a
+        G_GEOTECH.TA_GEOTECH_LIBELLE a
     WHERE
         UPPER(a.libelle_court) = UPPER('G5')
     UNION ALL
@@ -203,7 +203,7 @@ USING(
         2018 AS annee_creation,
         a.objectid AS fid_type_etude
     FROM
-        G_GEO.TA_GEOTECH_LIBELLE a
+        G_GEOTECH.TA_GEOTECH_LIBELLE a
     WHERE
         UPPER(a.libelle_court) = UPPER('G2 PRO')
     UNION ALL
@@ -211,7 +211,7 @@ USING(
         2018 AS annee_creation,
         a.objectid AS fid_type_etude
     FROM
-        G_GEO.TA_GEOTECH_LIBELLE a
+        G_GEOTECH.TA_GEOTECH_LIBELLE a
     WHERE
         UPPER(a.libelle_court) = UPPER('G0')
     UNION ALL
@@ -219,7 +219,7 @@ USING(
         2016 AS annee_creation,
         a.objectid AS fid_type_etude
     FROM
-        G_GEO.TA_GEOTECH_LIBELLE a
+        G_GEOTECH.TA_GEOTECH_LIBELLE a
     WHERE
         UPPER(a.libelle_court) = UPPER('G2 AVP')
     UNION ALL
@@ -227,7 +227,7 @@ USING(
         2021 AS annee_creation,
         a.objectid AS fid_type_etude
     FROM
-        G_GEO.TA_GEOTECH_LIBELLE a
+        G_GEOTECH.TA_GEOTECH_LIBELLE a
     WHERE
         UPPER(a.libelle_court) = UPPER('G0')
 )t
@@ -240,15 +240,15 @@ INSERT(a.annee_creation, a.fid_type_etude)
 VALUES(t.annee_creation, t.fid_type_etude);
 
 -- Insertion des relations sites/études
-MERGE INTO G_GEO.TA_GEOTECH_RELATION_SITE_ETUDE a
+MERGE INTO G_GEOTECH.TA_GEOTECH_RELATION_SITE_ETUDE a
 USING(
     SELECT
         a.objectid AS id_site,
         b.objectid AS id_etude
     FROM
-        G_GEO.TA_GEOTECH_SITE a,
-        G_GEO.TA_GEOTECH_ETUDE b
-        INNER JOIN G_GEO.TA_GEOTECH_LIBELLE c ON c.objectid = b.fid_type_etude
+        G_GEOTECH.TA_GEOTECH_SITE a,
+        G_GEOTECH.TA_GEOTECH_ETUDE b
+        INNER JOIN G_GEOTECH.TA_GEOTECH_LIBELLE c ON c.objectid = b.fid_type_etude
     WHERE
         UPPER(a.adresse) = UPPER('22 avenue Alfred Lefrançois')
         AND b.date_debut = 2021
@@ -258,9 +258,9 @@ USING(
         a.objectid AS id_site,
         b.objectid AS id_etude
     FROM
-        G_GEO.TA_GEOTECH_SITE a,
-        G_GEO.TA_GEOTECH_ETUDE b
-        INNER JOIN G_GEO.TA_GEOTECH_LIBELLE c ON c.objectid = b.fid_type_etude
+        G_GEOTECH.TA_GEOTECH_SITE a,
+        G_GEOTECH.TA_GEOTECH_ETUDE b
+        INNER JOIN G_GEOTECH.TA_GEOTECH_LIBELLE c ON c.objectid = b.fid_type_etude
     WHERE
         UPPER(a.adresse) = UPPER('115 rue DELESPAUL')
         AND b.date_debut = 2018
@@ -270,9 +270,9 @@ USING(
         a.objectid AS id_site,
         b.objectid AS id_etude
     FROM
-        G_GEO.TA_GEOTECH_SITE a,
-        G_GEO.TA_GEOTECH_ETUDE b
-        INNER JOIN G_GEO.TA_GEOTECH_LIBELLE c ON c.objectid = b.fid_type_etude
+        G_GEOTECH.TA_GEOTECH_SITE a,
+        G_GEOTECH.TA_GEOTECH_ETUDE b
+        INNER JOIN G_GEOTECH.TA_GEOTECH_LIBELLE c ON c.objectid = b.fid_type_etude
     WHERE
         UPPER(a.adresse) = UPPER('14 place du général Faidherbe')
         AND b.date_debut = 2018
@@ -282,9 +282,9 @@ USING(
         a.objectid AS id_site,
         b.objectid AS id_etude
     FROM
-        G_GEO.TA_GEOTECH_SITE a,
-        G_GEO.TA_GEOTECH_ETUDE b
-        INNER JOIN G_GEO.TA_GEOTECH_LIBELLE c ON c.objectid = b.fid_type_etude
+        G_GEOTECH.TA_GEOTECH_SITE a,
+        G_GEOTECH.TA_GEOTECH_ETUDE b
+        INNER JOIN G_GEOTECH.TA_GEOTECH_LIBELLE c ON c.objectid = b.fid_type_etude
     WHERE
         UPPER(a.adresse) = UPPER('Avenue de la Marne')
         AND 
@@ -293,9 +293,9 @@ USING(
         a.objectid AS id_site,
         b.objectid AS id_etude
     FROM
-        G_GEO.TA_GEOTECH_SITE a,
-        G_GEO.TA_GEOTECH_ETUDE b
-        INNER JOIN G_GEO.TA_GEOTECH_LIBELLE c ON c.objectid = b.fid_type_etude
+        G_GEOTECH.TA_GEOTECH_SITE a,
+        G_GEOTECH.TA_GEOTECH_ETUDE b
+        INNER JOIN G_GEOTECH.TA_GEOTECH_LIBELLE c ON c.objectid = b.fid_type_etude
     WHERE
         UPPER(a.adresse) = UPPER('Quai de la Deûle')
         AND 
@@ -304,9 +304,9 @@ USING(
         a.objectid AS id_site,
         b.objectid AS id_etude
     FROM
-        G_GEO.TA_GEOTECH_SITE a,
-        G_GEO.TA_GEOTECH_ETUDE b
-        INNER JOIN G_GEO.TA_GEOTECH_LIBELLE c ON c.objectid = b.fid_type_etude
+        G_GEOTECH.TA_GEOTECH_SITE a,
+        G_GEOTECH.TA_GEOTECH_ETUDE b
+        INNER JOIN G_GEOTECH.TA_GEOTECH_LIBELLE c ON c.objectid = b.fid_type_etude
     WHERE
         UPPER(a.adresse) = UPPER('Rue du grand but')
         AND 
@@ -315,9 +315,9 @@ USING(
         a.objectid AS id_site,
         b.objectid AS id_etude
     FROM
-        G_GEO.TA_GEOTECH_SITE a,
-        G_GEO.TA_GEOTECH_ETUDE b
-        INNER JOIN G_GEO.TA_GEOTECH_LIBELLE c ON c.objectid = b.fid_type_etude
+        G_GEOTECH.TA_GEOTECH_SITE a,
+        G_GEOTECH.TA_GEOTECH_ETUDE b
+        INNER JOIN G_GEOTECH.TA_GEOTECH_LIBELLE c ON c.objectid = b.fid_type_etude
     WHERE
         UPPER(a.adresse) = UPPER('34 rue de Lille')
         AND 
@@ -331,13 +331,13 @@ INSERT(a.fid_site, a.fid_etude)
 VALUES(t.id_site, t.id_etude);
 
 -- Insertion des bureaux d'étude
-MERGE INTO G_GEO.TA_GEOTECH_BUREAU_ETUDE a
+MERGE INTO G_GEOTECH.TA_GEOTECH_BUREAU_ETUDE a
 USING(
     SELECT
         'FONDASOL' AS nom,
         a.objectid AS fid_etude
     FROM
-        G_GEO.TA_GEOTECH_ETUDE a
+        G_GEOTECH.TA_GEOTECH_ETUDE a
 )t
 ON (
     UPPER(a.nom) = UPPER(t.nom)
