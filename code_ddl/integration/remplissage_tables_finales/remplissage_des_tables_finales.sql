@@ -8,6 +8,10 @@ USING(
     SELECT
         'Type d''études géotechniques' AS valeur
     FROM DUAL
+    /*UNION ALL
+    SELECT
+        'Action' AS valeur
+    FROM DUAL*/
 )t
 ON (UPPER(a.valeur) = UPPER(t.valeur))
 WHEN NOT MATCHED THEN
@@ -91,6 +95,21 @@ USING(
         'Etude de caractérisation de zone humide' AS libelle_long,
         'ZONES HUMIDES' AS LIBELLE_COURT
     FROM DUAL    
+    /*UNION ALL
+    SELECT 
+        'Insertion d''une entité' AS libelle_long,
+        'INSERTION' AS LIBELLE_COURT
+    FROM DUAL
+    UNION ALL
+    SELECT 
+        'Edition d''une entité existante' AS libelle_long,
+        'EDITION' AS LIBELLE_COURT
+    FROM DUAL
+    UNION ALL
+    SELECT 
+        'Suppression d''une entité existante' AS libelle_long,
+        'SUPPRESSION' AS LIBELLE_COURT
+    FROM DUAL*/
 )t
 ON (
     UPPER(a.libelle_long) = UPPER(t.libelle_long)
@@ -100,7 +119,7 @@ WHEN NOT MATCHED THEN
 INSERT(a.libelle_long, a.libelle_court)
 VALUES(t.libelle_long, t.libelle_court);
 
--- Insertion des relations familles / libellés longs
+-- Insertion des relations familles / libellés longs des types d'étude
 MERGE INTO G_GEOTECH.TA_GEOTECH_FAMILLE_LIBELLE a
 USING(
     SELECT
@@ -133,6 +152,24 @@ ON (a.fid_famille = t.fid_famille AND a.fid_libelle = t.fid_libelle)
 WHEN NOT MATCHED THEN
 INSERT(a.fid_famille, a.fid_libelle)
 VALUES(t.fid_famille, t.fid_libelle);
+
+-- Insertion des relations familles / libellés longs des types d'étude
+/*MERGE INTO G_GEOTECH.TA_GEOTECH_FAMILLE_LIBELLE a
+USING(
+    SELECT
+        a.objectid AS fid_famille,
+        b.objectid AS fid_libelle
+    FROM
+        G_GEOTECH.TA_GEOTECH_FAMILLE a,
+        G_GEOTECH.TA_GEOTECH_LIBELLE b
+    WHERE
+        UPPER(a.valeur) = UPPER('Action')
+        AND UPPER(b.libelle_court) IN('INSERTION','EDITION','SUPPRESSION')
+)t
+ON (a.fid_famille = t.fid_famille AND a.fid_libelle = t.fid_libelle)
+WHEN NOT MATCHED THEN
+INSERT(a.fid_famille, a.fid_libelle)
+VALUES(t.fid_famille, t.fid_libelle);*/
 
 -- Insertion des sites
 MERGE INTO G_GEOTECH.TA_GEOTECH_SITE a

@@ -8,7 +8,7 @@ SET NLS_LANG=AMERICAN_AMERICA.AL32UTF8
 SET /p chemin_code_sequence="Veuillez saisir le chemin d'acces du dossier contenant le code DDL des SEQUENCES du schema : "
 SET /p chemin_code_fonction="Veuillez saisir le chemin d'acces du dossier contenant le code DDL des FONCTIONS du schema : "
 SET /p chemin_code_table="Veuillez saisir le chemin d'acces du dossier contenant le code DDL des TABLES du schema : "
-::SET /p chemin_code_trigger="Veuillez saisir le chemin d'acces du dossier contenant le code DDL des DECLENCHEURS du schema : "
+SET /p chemin_code_trigger="Veuillez saisir le chemin d'acces du dossier contenant le code DDL des DECLENCHEURS du schema : "
 SET /p chemin_code_vue="Veuillez saisir le chemin d'acces du dossier contenant le code DDL des VUES du schema : "
 SET /p chemin_code_droits="Veuillez saisir le chemin d'acces du dossier contenant les droits de lecture et ecriture du schema : "
 SET /p chemin_code_temp="Veuillez saisir le chemin d'acces du dossier integration\creation_tables_finales : "
@@ -29,11 +29,17 @@ copy /b %chemin_code_fonction%\creation_get_code_insee_contain_point.sql + ^
 %chemin_code_table%\creation_ta_geotech_relation_site_etude.sql + ^
 %chemin_code_sequence%\creation_seq_ta_geotech_bureau_etude_objectid.sql + ^
 %chemin_code_table%\creation_ta_geotech_bureau_etude.sql + ^
-%chemin_code_table%\creation_ta_geotech_repertoire.sql + ^ ^
-%chemin_code_table%\creation_ta_geotech_fichier.sql + ^
 %chemin_code_vue%\creation_v_geotech_visualisation_site_etude.sql + ^
 %chemin_code_droits%\droits_lecture_edition_suppression_objets_geotech.sql ^
 %chemin_code_temp%\temp_code_ddl_schema.sql
+
+::%chemin_code_table%\creation_ta_geotech_repertoire.sql + ^
+::%chemin_code_table%\creation_ta_geotech_fichier.sql + ^
+::%chemin_code_vue%\creation_v_chemin_fichier_geotech.sql + ^
+::%chemin_code_table%\creation_ta_geotech_etude_log.sql + ^
+::%chemin_code_table%\creation_ta_geotech_site_log.sql + ^
+::%chemin_code_trigger%\creation_a_iud_ta_geotech_etude_log.sql + ^
+::%chemin_code_trigger%\creation_a_iud_ta_geotech_site_log.sql + ^
 
 :: 3. lancement de SQL plus.
 ::CD C:/ora12c/R1/BIN
