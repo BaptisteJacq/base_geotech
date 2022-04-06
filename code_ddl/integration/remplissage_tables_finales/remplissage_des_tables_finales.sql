@@ -200,7 +200,7 @@ USING(
     UNION ALL
     SELECT
         MDSYS.SDO_GEOMETRY(2001, 2154, MDSYS.SDO_POINT_TYPE(698259.3, 7061870.7, NULL), NULL, NULL) AS geom,
-        'Rue du grand but' AS adresse,
+        'Rue du grand but (Lomme)' AS adresse,
         'Construction d''une ombrière photovoltaïque sur le parking relais' AS description
     FROM DUAL
     UNION ALL
@@ -221,151 +221,145 @@ VALUES(t.geom, t.adresse, t.description);
 MERGE INTO G_GEOTECH.TA_GEOTECH_ETUDE a
 USING(
     SELECT
-        2021 AS annee_creation,
-        a.objectid AS fid_type_etude
+        2021 AS date_debut,
+        a.objectid AS fid_type_etude,
+        b.objectid AS fid_site
     FROM
-        G_GEOTECH.TA_GEOTECH_LIBELLE a
+        G_GEOTECH.TA_GEOTECH_LIBELLE a,
+        G_GEOTECH.TA_GEOTECH_SITE b
     WHERE
         UPPER(a.libelle_court) = UPPER('G2 AVP')
+        AND b.description = 'Restructuration du bâtiment SOPURA'
+        AND b.adresse = '115 rue DELESPAUL'
     UNION ALL
     SELECT
-        2018 AS annee_creation,
-        a.objectid AS fid_type_etude
+        2018 AS date_debut,
+        a.objectid AS fid_type_etude,
+        b.objectid AS fid_site
     FROM
-        G_GEOTECH.TA_GEOTECH_LIBELLE a
+        G_GEOTECH.TA_GEOTECH_LIBELLE a,
+        G_GEOTECH.TA_GEOTECH_SITE b
     WHERE
         UPPER(a.libelle_court) = UPPER('G5')
+        AND b.description = 'Justification des fondations existantes du bâtiment HALL B'
+        AND b.adresse = '14 place du général Faidherbe'
     UNION ALL
     SELECT
-        2018 AS annee_creation,
-        a.objectid AS fid_type_etude
+        2018 AS date_debut,
+        a.objectid AS fid_type_etude,
+        b.objectid AS fid_site
     FROM
-        G_GEOTECH.TA_GEOTECH_LIBELLE a
+        G_GEOTECH.TA_GEOTECH_LIBELLE a,
+        G_GEOTECH.TA_GEOTECH_SITE b
     WHERE
         UPPER(a.libelle_court) = UPPER('G2 PRO')
+        AND b.description = 'Construction d''un parking relais en superstructures'
+        AND b.adresse = '22 avenue Alfred Lefrançois'        
     UNION ALL
     SELECT
-        2018 AS annee_creation,
-        a.objectid AS fid_type_etude
+        2018 AS date_debut,
+        a.objectid AS fid_type_etude,
+        b.objectid AS fid_site
     FROM
-        G_GEOTECH.TA_GEOTECH_LIBELLE a
-    WHERE
-        UPPER(a.libelle_court) = UPPER('G0')
-    UNION ALL
-    SELECT
-        2016 AS annee_creation,
-        a.objectid AS fid_type_etude
-    FROM
-        G_GEOTECH.TA_GEOTECH_LIBELLE a
+        G_GEOTECH.TA_GEOTECH_LIBELLE a,
+        G_GEOTECH.TA_GEOTECH_SITE b
     WHERE
         UPPER(a.libelle_court) = UPPER('G2 AVP')
+        AND b.description = 'Construction d''un parking relais en superstructures'
+        AND b.adresse = '22 avenue Alfred Lefrançois'
     UNION ALL
     SELECT
-        2021 AS annee_creation,
-        a.objectid AS fid_type_etude
+        2018 AS date_debut,
+        a.objectid AS fid_type_etude,
+        b.objectid AS fid_site
     FROM
-        G_GEOTECH.TA_GEOTECH_LIBELLE a
+        G_GEOTECH.TA_GEOTECH_LIBELLE a,
+        G_GEOTECH.TA_GEOTECH_SITE b
+    WHERE
+        UPPER(a.libelle_court) = UPPER('G2 PRO')
+        AND b.description = 'Construction d''un parking relais en superstructures'
+        AND b.adresse = '22 avenue Alfred Lefrançois'
+    UNION ALL
+    SELECT
+        2018 AS date_debut,
+        a.objectid AS fid_type_etude,
+        b.objectid AS fid_site
+    FROM
+        G_GEOTECH.TA_GEOTECH_LIBELLE a,
+        G_GEOTECH.TA_GEOTECH_SITE b
+    WHERE
+        UPPER(a.libelle_court) = UPPER('POLLUTION')
+        AND b.description = 'Construction d''un parking relais en superstructures'
+        AND b.adresse = '22 avenue Alfred Lefrançois'        
+    UNION ALL
+    SELECT
+        2018 AS date_debut,
+        a.objectid AS fid_type_etude,
+        b.objectid AS fid_site
+    FROM
+        G_GEOTECH.TA_GEOTECH_LIBELLE a,
+        G_GEOTECH.TA_GEOTECH_SITE b
     WHERE
         UPPER(a.libelle_court) = UPPER('G0')
+        AND b.description = 'parking relais Cerisaie'
+        AND b.adresse = 'Avenue de la Marne'
+        UNION ALL
+    SELECT
+        2018 AS date_debut,
+        a.objectid AS fid_type_etude,
+        b.objectid AS fid_site
+    FROM
+        G_GEOTECH.TA_GEOTECH_LIBELLE a,
+        G_GEOTECH.TA_GEOTECH_SITE b
+    WHERE
+        UPPER(a.libelle_court) = UPPER('POLLUTION')
+        AND b.description = 'parking relais Cerisaie'
+        AND b.adresse = 'Avenue de la Marne'
+    UNION ALL
+    SELECT
+        2016 AS date_debut,
+        a.objectid AS fid_type_etude,
+        b.objectid AS fid_site
+    FROM
+        G_GEOTECH.TA_GEOTECH_LIBELLE a,
+        G_GEOTECH.TA_GEOTECH_SITE b
+    WHERE
+        UPPER(a.libelle_court) = UPPER('G2 AVP')
+        AND b.description = 'Construction d''une ombrière photovoltaïque sur le parking relais'
+        AND b.adresse = 'Rue du grand but (Lomme)'
+    UNION ALL
+    SELECT
+        2021 AS date_debut,
+        a.objectid AS fid_type_etude,
+        b.objectid AS fid_site
+    FROM
+        G_GEOTECH.TA_GEOTECH_LIBELLE a,
+        G_GEOTECH.TA_GEOTECH_SITE b
+    WHERE
+        UPPER(a.libelle_court) = UPPER('G0')
+        AND b.description = 'Aménagement de la cour Paux'
+        AND b.adresse = '34 rue de Lille'
+    UNION ALL
+    SELECT
+        2021 AS date_debut,
+        a.objectid AS fid_type_etude,
+        b.objectid AS fid_site
+    FROM
+        G_GEOTECH.TA_GEOTECH_LIBELLE a,
+        G_GEOTECH.TA_GEOTECH_SITE b
+    WHERE
+        UPPER(a.libelle_court) = UPPER('POLLUTION')
+        AND b.description = 'Aménagement de la cour Paux'
+        AND b.adresse = '34 rue de Lille'
 )t
 ON (
-        UPPER(a.description) = UPPER(t.description) 
+        a.date_debut = t.date_debut
+        AND a.fid_site = t.fid_site
         AND a.fid_type_etude = t.fid_type_etude
     )
 WHEN NOT MATCHED THEN
-INSERT(a.annee_creation, a.fid_type_etude)
-VALUES(t.annee_creation, t.fid_type_etude);
-
--- Insertion des relations sites/études
-MERGE INTO G_GEOTECH.TA_GEOTECH_RELATION_SITE_ETUDE a
-USING(
-    SELECT
-        a.objectid AS id_site,
-        b.objectid AS id_etude
-    FROM
-        G_GEOTECH.TA_GEOTECH_SITE a,
-        G_GEOTECH.TA_GEOTECH_ETUDE b
-        INNER JOIN G_GEOTECH.TA_GEOTECH_LIBELLE c ON c.objectid = b.fid_type_etude
-    WHERE
-        UPPER(a.adresse) = UPPER('22 avenue Alfred Lefrançois')
-        AND b.date_debut = 2021
-        AND UPPER(c.libelle_court) = UPPER('G2 AVP')
-    UNION ALL
-    SELECT
-        a.objectid AS id_site,
-        b.objectid AS id_etude
-    FROM
-        G_GEOTECH.TA_GEOTECH_SITE a,
-        G_GEOTECH.TA_GEOTECH_ETUDE b
-        INNER JOIN G_GEOTECH.TA_GEOTECH_LIBELLE c ON c.objectid = b.fid_type_etude
-    WHERE
-        UPPER(a.adresse) = UPPER('115 rue DELESPAUL')
-        AND b.date_debut = 2018
-        AND UPPER(c.libelle_court) = UPPER('G2 AVP')
-    UNION ALL
-    SELECT
-        a.objectid AS id_site,
-        b.objectid AS id_etude
-    FROM
-        G_GEOTECH.TA_GEOTECH_SITE a,
-        G_GEOTECH.TA_GEOTECH_ETUDE b
-        INNER JOIN G_GEOTECH.TA_GEOTECH_LIBELLE c ON c.objectid = b.fid_type_etude
-    WHERE
-        UPPER(a.adresse) = UPPER('14 place du général Faidherbe')
-        AND b.date_debut = 2018
-        AND UPPER(c.libelle_court) = UPPER('G5')
-    UNION ALL
-    SELECT
-        a.objectid AS id_site,
-        b.objectid AS id_etude
-    FROM
-        G_GEOTECH.TA_GEOTECH_SITE a,
-        G_GEOTECH.TA_GEOTECH_ETUDE b
-        INNER JOIN G_GEOTECH.TA_GEOTECH_LIBELLE c ON c.objectid = b.fid_type_etude
-    WHERE
-        UPPER(a.adresse) = UPPER('Avenue de la Marne')
-        AND 
-    UNION ALL
-    SELECT
-        a.objectid AS id_site,
-        b.objectid AS id_etude
-    FROM
-        G_GEOTECH.TA_GEOTECH_SITE a,
-        G_GEOTECH.TA_GEOTECH_ETUDE b
-        INNER JOIN G_GEOTECH.TA_GEOTECH_LIBELLE c ON c.objectid = b.fid_type_etude
-    WHERE
-        UPPER(a.adresse) = UPPER('Quai de la Deûle')
-        AND 
-    UNION ALL
-    SELECT
-        a.objectid AS id_site,
-        b.objectid AS id_etude
-    FROM
-        G_GEOTECH.TA_GEOTECH_SITE a,
-        G_GEOTECH.TA_GEOTECH_ETUDE b
-        INNER JOIN G_GEOTECH.TA_GEOTECH_LIBELLE c ON c.objectid = b.fid_type_etude
-    WHERE
-        UPPER(a.adresse) = UPPER('Rue du grand but')
-        AND 
-    UNION ALL
-    SELECT
-        a.objectid AS id_site,
-        b.objectid AS id_etude
-    FROM
-        G_GEOTECH.TA_GEOTECH_SITE a,
-        G_GEOTECH.TA_GEOTECH_ETUDE b
-        INNER JOIN G_GEOTECH.TA_GEOTECH_LIBELLE c ON c.objectid = b.fid_type_etude
-    WHERE
-        UPPER(a.adresse) = UPPER('34 rue de Lille')
-        AND 
-)t
-ON (
-    a.fid_site = t.id_site
-    AND a.fid_etude = t.id_etude
-    )
-WHEN NOT MATCHED THEN
-INSERT(a.fid_site, a.fid_etude)
-VALUES(t.id_site, t.id_etude);
+INSERT(a.date_debut, a.fid_type_etude, a.fid_site)
+VALUES(t.date_debut, t.fid_type_etude, t.fid_site);
 
 -- Insertion des bureaux d'étude
 MERGE INTO G_GEOTECH.TA_GEOTECH_BUREAU_ETUDE a
